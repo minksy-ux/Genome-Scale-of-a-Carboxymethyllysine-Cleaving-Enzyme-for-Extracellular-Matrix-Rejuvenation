@@ -1,0 +1,21 @@
+{
+  "formulation_id": "",
+  "variant_id": "CMLASE_ECM_V_BAD",
+  "format": "lotion",
+  "components": [
+    {
+      "name": "Purified water",
+      "role": "solvent",
+      "fraction_w_w": 1.2
+    }
+  ],
+  "stability_profile": {
+    "conditions": {
+      "temperature_c": "cold",
+      "duration_days": -5
+    },
+    "retained_activity_pct": 140,
+    "physical_status": "unknown_status"
+  },
+  "created_at": "not-a-date"
+}

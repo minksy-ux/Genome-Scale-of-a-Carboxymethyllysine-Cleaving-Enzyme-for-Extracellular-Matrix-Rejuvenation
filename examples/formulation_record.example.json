@@ -1,0 +1,144 @@
+{
+  "formulation_id": "FRM-CMLASE-DS-001",
+  "variant_id": "CMLASE_ECM_V17",
+  "format": "dual_chamber_cream",
+  "components": [
+    {
+      "name": "Purified water",
+      "role": "solvent",
+      "fraction_w_w": 0.58
+    },
+    {
+      "name": "Glycerin",
+      "role": "humectant",
+      "fraction_w_w": 0.10
+    },
+    {
+      "name": "Trehalose",
+      "role": "stabilizer",
+      "fraction_w_w": 0.05
+    },
+    {
+      "name": "Carnosine",
+      "role": "dicarbonyl_scavenger",
+      "fraction_w_w": 0.01
+    },
+    {
+      "name": "Niacinamide",
+      "role": "supportive_active",
+      "fraction_w_w": 0.05
+    },
+    {
+      "name": "Low-MW hyaluronic acid",
+      "role": "hydration_support",
+      "fraction_w_w": 0.0025
+    },
+    {
+      "name": "High-MW hyaluronic acid",
+      "role": "film_former",
+      "fraction_w_w": 0.0025
+    },
+    {
+      "name": "Squalane",
+      "role": "emollient",
+      "fraction_w_w": 0.06
+    },
+    {
+      "name": "Ceramide complex",
+      "role": "barrier_support",
+      "fraction_w_w": 0.01
+    },
+    {
+      "name": "Polysorbate 80",
+      "role": "nonionic_emulsifier",
+      "fraction_w_w": 0.015
+    },
+    {
+      "name": "Cetearyl alcohol",
+      "role": "co_emulsifier",
+      "fraction_w_w": 0.025
+    },
+    {
+      "name": "Ethoxydiglycol",
+      "role": "penetration_enhancer",
+      "fraction_w_w": 0.03
+    },
+    {
+      "name": "Phenoxyethanol + Ethylhexylglycerin",
+      "role": "preservative",
+      "fraction_w_w": 0.01
+    },
+    {
+      "name": "CrGO-derived CMLase concentrate",
+      "role": "enzyme_active",
+      "fraction_w_w": 0.005
+    }
+  ],
+  "enzyme_module": {
+    "enzyme_name": "CrGO-derived CMLase",
+    "enzyme_variant": "CMLASE_ECM_V17",
+    "enzyme_fraction_w_w": 0.005,
+    "activity_u_per_g": 50,
+    "encapsulation_type": "liposome"
+  },
+  "stabilization_system": {
+    "glycine_g_per_g_enzyme": 3,
+    "trehalose_pct": 5,
+    "sucrose_pct": 0,
+    "methionine_pct": 0.2,
+    "edta_pct": 0.1,
+    "notes": "Enzyme loaded in cooled phase with antioxidant and chelation support"
+  },
+  "delivery_support": {
+    "penetration_enhancers": [
+      "Ethoxydiglycol"
+    ],
+    "ecm_targeting_motif": "collagen_binding_peptide_CBP1",
+    "co_formulated_hyaluronidase": false,
+    "hyaluronidase_note": "Reserved for separate protocol arm"
+  },
+  "supportive_actives": [
+    {
+      "name": "Carnosine",
+      "class": "dicarbonyl_scavenger",
+      "pct": 1
+    },
+    {
+      "name": "Niacinamide",
+      "class": "antioxidant",
+      "pct": 5
+    },
+    {
+      "name": "Low-MW Hyaluronic Acid",
+      "class": "ecm_support",
+      "pct": 0.25
+    },
+    {
+      "name": "Panthenol",
+      "class": "soothing",
+      "pct": 1
+    }
+  ],
+  "stability_profile": {
+    "conditions": {
+      "temperature_c": 4,
+      "duration_days": 90,
+      "light_exposure": "protected",
+      "storage_mode": "dual_chamber_sealed"
+    },
+    "retained_activity_pct": 82,
+    "physical_status": "stable"
+  },
+  "process_controls": {
+    "cold_process_preferred": true,
+    "max_enzyme_addition_temp_c": 35,
+    "mixing_shear": "low",
+    "packaging": "dual_chamber"
+  },
+  "on_skin_targets": {
+    "target_ph_min": 5.8,
+    "target_ph_max": 6.2,
+    "target_contact_time_min": 480
+  },
+  "created_at": "2026-07-19T12:00:00Z"
+}

@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/formulation_record.schema.json",
+  "title": "FormulationRecord",
+  "type": "object",
+  "required": [
+    "formulation_id",
+    "variant_id",
+    "format",
+    "components",
+    "stability_profile",
+    "created_at"
+  ],
+  "properties": {
+    "formulation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": ["single_phase_cream", "dual_chamber_cream", "gel_cream", "serum"]
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "fraction_w_w": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "enzyme_module": {
+      "type": "object",
+      "properties": {
+        "enzyme_name": { "type": "string" },
+        "enzyme_variant": { "type": "string" },
+        "enzyme_fraction_w_w": { "type": "number", "minimum": 0, "maximum": 1 },
+        "activity_u_per_g": { "type": "number", "minimum": 0 },
+        "encapsulation_type": {
+          "type": "string",
+          "enum": ["none", "liposome", "niosome", "supramolecular", "other"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "stabilization_system": {
+      "type": "object",
+      "properties": {
+        "glycine_g_per_g_enzyme": { "type": "number", "minimum": 0 },
+        "trehalose_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "sucrose_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "methionine_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "edta_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "delivery_support": {
+      "type": "object",
+      "properties": {
+        "penetration_enhancers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ecm_targeting_motif": { "type": "string" },
+        "co_formulated_hyaluronidase": { "type": "boolean" },
+        "hyaluronidase_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "supportive_actives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "class"],
+        "properties": {
+          "name": { "type": "string" },
+          "class": {
+            "type": "string",
+            "enum": ["dicarbonyl_scavenger", "antioxidant", "ecm_support", "soothing", "other"]
+          },
+          "pct": { "type": "number", "minimum": 0, "maximum": 100 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "stability_profile": {
+      "type": "object",
+      "required": ["conditions", "retained_activity_pct"],
+      "properties": {
+        "conditions": {
+          "type": "object",
+          "properties": {
+            "temperature_c": { "type": "number" },
+            "duration_days": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": true
+        },
+        "retained_activity_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "physical_status": {
+          "type": "string",
+          "enum": ["stable", "phase_separation", "precipitation", "viscosity_shift", "unknown"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "process_controls": {
+      "type": "object",
+      "properties": {
+        "cold_process_preferred": { "type": "boolean" },
+        "max_enzyme_addition_temp_c": { "type": "number" },
+        "mixing_shear": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "unspecified"]
+        },
+        "packaging": {
+          "type": "string",
+          "enum": ["single_chamber", "dual_chamber", "reconstituted", "other"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "on_skin_targets": {
+      "type": "object",
+      "properties": {
+        "target_ph_min": { "type": "number", "minimum": 0, "maximum": 14 },
+        "target_ph_max": { "type": "number", "minimum": 0, "maximum": 14 },
+        "target_contact_time_min": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

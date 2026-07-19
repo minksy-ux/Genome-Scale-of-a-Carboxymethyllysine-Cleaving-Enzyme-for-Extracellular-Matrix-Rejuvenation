@@ -1,0 +1,268 @@
+{
+  "version": "1.0.0",
+  "description": "Machine-readable mapping from algorithm families to required schema fields for pipeline preflight validation.",
+  "schema_files": {
+    "variant_record": "schemas/variant_record.schema.json",
+    "assay_result": "schemas/assay_result.schema.json",
+    "formulation_record": "schemas/formulation_record.schema.json"
+  },
+  "path_notation": "dot_path",
+  "algorithms": [
+    {
+      "algorithm_id": "sequence_alignment_conservation",
+      "family": "dynamic_programming",
+      "methods": ["Needleman-Wunsch", "Smith-Waterman"],
+      "required_schemas": ["variant_record"],
+      "required_fields": {
+        "variant_record": ["sequence", "mutations", "parent_scaffold_id"]
+      },
+      "optional_fields": {
+        "variant_record": ["design_round", "provenance.feature_set_version"]
+      },
+      "derived_features": [
+        "conservation_score",
+        "substitution_class",
+        "mutation_burden"
+      ],
+      "training_views": ["variant_feature_view"]
+    },
+    {
+      "algorithm_id": "residue_graph_hotspot_scoring",
+      "family": "graph_algorithms",
+      "methods": ["centrality", "community_detection", "shortest_path"],
+      "required_schemas": ["variant_record"],
+      "required_fields": {
+        "variant_record": ["sequence", "mutations"]
+      },
+      "optional_fields": {
+        "variant_record": ["parent_scaffold_id"]
+      },
+      "derived_features": [
+        "residue_centrality_proxy",
+        "mutational_neighborhood_density"
+      ],
+      "training_views": ["variant_feature_view"]
+    },
+    {
+      "algorithm_id": "supervised_sequence_function_prediction",
+      "family": "supervised_learning",
+      "methods": ["gradient_boosting", "random_forest", "neural_network"],
+      "required_schemas": ["variant_record", "assay_result"],
+      "required_fields": {
+        "variant_record": ["variant_id", "sequence", "mutations"],
+        "assay_result": [
+          "variant_id",
+          "assay_type",
+          "conditions.temperature_c",
+          "conditions.ph",
+          "measurements.kcat_over_km"
+        ]
+      },
+      "optional_fields": {
+        "variant_record": ["predicted_scores.activity_score", "predicted_scores.selectivity_score"],
+        "assay_result": ["measurements.off_target_index", "qc.passed", "batch_id"]
+      },
+      "derived_features": [
+        "sequence_embedding",
+        "mutation_vector",
+        "condition_normalized_target"
+      ],
+      "training_views": ["variant_feature_view", "assay_feature_view"]
+    },
+    {
+      "algorithm_id": "bayesian_variant_optimization",
+      "family": "gradient_free_optimization",
+      "methods": ["Bayesian_optimization", "Thompson_sampling", "UCB"],
+      "required_schemas": ["variant_record", "assay_result"],
+      "required_fields": {
+        "variant_record": ["variant_id", "design_round", "predicted_scores.uncertainty"],
+        "assay_result": ["variant_id", "measurements.kcat_over_km", "timestamp"]
+      },
+      "optional_fields": {
+        "assay_result": ["measurements.off_target_index", "qc.passed"]
+      },
+      "derived_features": [
+        "posterior_mean",
+        "posterior_variance",
+        "expected_improvement"
+      ],
+      "training_views": ["variant_feature_view", "assay_feature_view"]
+    },
+    {
+      "algorithm_id": "clustering_landscape_interpretation",
+      "family": "unsupervised_learning",
+      "methods": ["kmeans", "hierarchical_clustering", "UMAP", "PCA"],
+      "required_schemas": ["variant_record", "assay_result"],
+      "required_fields": {
+        "variant_record": ["variant_id", "sequence", "mutations"],
+        "assay_result": ["variant_id", "measurements.kcat_over_km"]
+      },
+      "optional_fields": {
+        "assay_result": ["measurements.off_target_index", "conditions.ph"]
+      },
+      "derived_features": [
+        "latent_embedding",
+        "cluster_label",
+        "diversity_distance"
+      ],
+      "training_views": ["variant_feature_view", "assay_feature_view"]
+    },
+    {
+      "algorithm_id": "kinetic_multitask_regression",
+      "family": "supervised_learning",
+      "methods": ["multitask_regression", "calibrated_regression"],
+      "required_schemas": ["assay_result"],
+      "required_fields": {
+        "assay_result": [
+          "assay_type",
+          "conditions.temperature_c",
+          "conditions.ph",
+          "measurements.kcat",
+          "measurements.km",
+          "measurements.kcat_over_km"
+        ]
+      },
+      "optional_fields": {
+        "assay_result": ["measurements.off_target_index", "qc.passed", "batch_id"]
+      },
+      "derived_features": [
+        "condition_normalized_kinetics",
+        "qc_weight"
+      ],
+      "training_views": ["assay_feature_view"]
+    },
+    {
+      "algorithm_id": "batch_effect_correction",
+      "family": "statistical_modeling",
+      "methods": ["mixed_effects", "empirical_bayes"],
+      "required_schemas": ["assay_result"],
+      "required_fields": {
+        "assay_result": ["batch_id", "timestamp", "measurements.kcat_over_km"]
+      },
+      "optional_fields": {
+        "assay_result": ["qc.passed", "conditions.temperature_c", "conditions.ph"]
+      },
+      "derived_features": ["batch_effect_term", "time_drift_term"],
+      "training_views": ["assay_feature_view"]
+    },
+    {
+      "algorithm_id": "formulation_multiobjective_optimization",
+      "family": "gradient_free_optimization",
+      "methods": ["CMA-ES", "Bayesian_optimization", "Pareto_ranking"],
+      "required_schemas": ["formulation_record"],
+      "required_fields": {
+        "formulation_record": [
+          "variant_id",
+          "format",
+          "components",
+          "stability_profile.retained_activity_pct",
+          "stability_profile.physical_status"
+        ]
+      },
+      "optional_fields": {
+        "formulation_record": [
+          "enzyme_module.activity_u_per_g",
+          "enzyme_module.encapsulation_type",
+          "stabilization_system.glycine_g_per_g_enzyme",
+          "stabilization_system.trehalose_pct",
+          "stabilization_system.methionine_pct",
+          "delivery_support.penetration_enhancers",
+          "process_controls.max_enzyme_addition_temp_c",
+          "stability_profile.conditions.temperature_c",
+          "stability_profile.conditions.duration_days"
+        ]
+      },
+      "derived_features": [
+        "component_vector",
+        "stability_penalty",
+        "pareto_rank"
+      ],
+      "training_views": ["formulation_feature_view"]
+    },
+    {
+      "algorithm_id": "formulation_decay_modeling",
+      "family": "time_series_modeling",
+      "methods": ["nonlinear_decay_fit", "survival_like_decay"],
+      "required_schemas": ["formulation_record"],
+      "required_fields": {
+        "formulation_record": [
+          "stability_profile.conditions.temperature_c",
+          "stability_profile.conditions.duration_days",
+          "stability_profile.retained_activity_pct"
+        ]
+      },
+      "optional_fields": {
+        "formulation_record": [
+          "format",
+          "components",
+          "enzyme_module.activity_u_per_g",
+          "stabilization_system.trehalose_pct",
+          "process_controls.max_enzyme_addition_temp_c"
+        ]
+      },
+      "derived_features": [
+        "decay_rate_constant",
+        "projected_retention_horizon"
+      ],
+      "training_views": ["formulation_feature_view"]
+    },
+    {
+      "algorithm_id": "rule_based_gate_decisions",
+      "family": "decision_algorithms",
+      "methods": ["decision_tree", "rule_engine"],
+      "required_schemas": ["variant_record", "assay_result", "formulation_record"],
+      "required_fields": {
+        "variant_record": ["variant_id", "predicted_scores.selectivity_score"],
+        "assay_result": ["variant_id", "measurements.off_target_index"],
+        "formulation_record": ["variant_id", "stability_profile.retained_activity_pct", "stability_profile.physical_status"]
+      },
+      "optional_fields": {
+        "assay_result": ["qc.passed"],
+        "variant_record": ["design_round"]
+      },
+      "derived_features": ["gate_pass_flag", "decision_trace"],
+      "training_views": ["variant_feature_view", "assay_feature_view", "formulation_feature_view"]
+    }
+  ],
+  "training_views": {
+    "variant_feature_view": {
+      "source_schema": "variant_record",
+      "required_fields": [
+        "variant_id",
+        "design_round",
+        "sequence",
+        "mutations"
+      ]
+    },
+    "assay_feature_view": {
+      "source_schema": "assay_result",
+      "required_fields": [
+        "assay_id",
+        "variant_id",
+        "assay_type",
+        "conditions.temperature_c",
+        "conditions.ph",
+        "measurements.kcat_over_km"
+      ]
+    },
+    "formulation_feature_view": {
+      "source_schema": "formulation_record",
+      "required_fields": [
+        "formulation_id",
+        "variant_id",
+        "format",
+        "components",
+        "stability_profile.retained_activity_pct"
+      ]
+    }
+  },
+  "preflight_validation": {
+    "mode": "fail_fast",
+    "checks": [
+      "selected_algorithm_ids_exist",
+      "required_schemas_declared",
+      "required_fields_present",
+      "training_views_resolvable"
+    ]
+  }
+}

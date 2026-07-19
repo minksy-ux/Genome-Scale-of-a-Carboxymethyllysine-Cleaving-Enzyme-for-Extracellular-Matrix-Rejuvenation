@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/variant_record.schema.json",
+  "title": "VariantRecord",
+  "type": "object",
+  "required": [
+    "variant_id",
+    "parent_scaffold_id",
+    "sequence",
+    "mutations",
+    "design_round",
+    "created_at"
+  ],
+  "properties": {
+    "variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_scaffold_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sequence": {
+      "type": "string",
+      "pattern": "^[ACDEFGHIKLMNPQRSTVWY]+$"
+    },
+    "mutations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["position", "from", "to"],
+        "properties": {
+          "position": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "from": {
+            "type": "string",
+            "pattern": "^[ACDEFGHIKLMNPQRSTVWY]$"
+          },
+          "to": {
+            "type": "string",
+            "pattern": "^[ACDEFGHIKLMNPQRSTVWY]$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "design_round": {
+      "type": "string"
+    },
+    "predicted_scores": {
+      "type": "object",
+      "properties": {
+        "activity_score": { "type": "number" },
+        "selectivity_score": { "type": "number" },
+        "stability_score": { "type": "number" },
+        "uncertainty": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "model_version": { "type": "string" },
+        "feature_set_version": { "type": "string" },
+        "proposal_manifest_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

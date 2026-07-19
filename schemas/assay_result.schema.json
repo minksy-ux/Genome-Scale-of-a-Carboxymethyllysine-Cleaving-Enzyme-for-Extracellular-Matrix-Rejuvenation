@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/assay_result.schema.json",
+  "title": "AssayResult",
+  "type": "object",
+  "required": [
+    "assay_id",
+    "variant_id",
+    "batch_id",
+    "assay_type",
+    "conditions",
+    "measurements",
+    "timestamp"
+  ],
+  "properties": {
+    "assay_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assay_type": {
+      "type": "string",
+      "enum": [
+        "activity",
+        "selectivity",
+        "stability",
+        "formulation_compatibility"
+      ]
+    },
+    "conditions": {
+      "type": "object",
+      "required": ["temperature_c", "ph"],
+      "properties": {
+        "temperature_c": { "type": "number" },
+        "ph": { "type": "number", "minimum": 0, "maximum": 14 },
+        "matrix": { "type": "string" },
+        "timepoint_h": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "measurements": {
+      "type": "object",
+      "properties": {
+        "kcat": { "type": "number" },
+        "km": { "type": "number" },
+        "kcat_over_km": { "type": "number" },
+        "retained_activity_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "off_target_index": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "qc": {
+      "type": "object",
+      "properties": {
+        "passed": { "type": "boolean" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

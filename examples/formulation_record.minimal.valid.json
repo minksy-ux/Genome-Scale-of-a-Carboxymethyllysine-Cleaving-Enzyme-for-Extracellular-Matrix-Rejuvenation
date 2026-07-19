@@ -1,0 +1,26 @@
+{
+  "formulation_id": "FRM-MIN-001",
+  "variant_id": "CMLASE_ECM_V01",
+  "format": "serum",
+  "components": [
+    {
+      "name": "Purified water",
+      "role": "solvent",
+      "fraction_w_w": 0.95
+    },
+    {
+      "name": "CrGO-derived CMLase concentrate",
+      "role": "enzyme_active",
+      "fraction_w_w": 0.005
+    }
+  ],
+  "stability_profile": {
+    "conditions": {
+      "temperature_c": 4,
+      "duration_days": 30
+    },
+    "retained_activity_pct": 75,
+    "physical_status": "stable"
+  },
+  "created_at": "2026-07-19T12:30:00Z"
+}
