@@ -31,6 +31,7 @@ Recent engineered oxidase work suggests peptidyl-CML can be selectively processe
 - docs/algorithm_schema_matrix.md: Compact map from algorithm families to required schema fields and model-ready views.
 - docs/topical_cream_architecture.md: Concrete cream architecture and delivery model.
 - docs/conceptual_cmlase_formulation.md: Research-stage CMLase topical formulation rationale and module design.
+- docs/paper_aligned_formulation_scoring.md: Paper-aligned rubric mapping Nature Communications CMLase priorities to formulation schema fields.
 - docs/chemical_formula_reference.md: Molecular formula appendix for major compounds in the CMLase concept.
 - docs/protocols.md: High-level, implementation-ready protocol templates.
 - docs/pseudocode.md: Pseudocode for active learning, selection planning, and lead down-selection.
@@ -88,6 +89,7 @@ Validation fixtures:
 Quick smoke test:
 
 - Run python3 scripts/validate_formulation_examples.py to verify expected pass/fail behavior for included examples.
+- Run python3 scripts/score_formulations.py to compute paper-aligned 0-100 rubric scores and rank formulation records.
 
 ## Safety and Use Boundaries
 
